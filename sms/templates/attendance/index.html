@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Attendance{% endblock %}
+{% block page_title %}Attendance & Marks{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between mb-3">
+  <span class="text-muted" style="font-size:.875rem;">{{ students|length }} active student(s)</span>
+  <div class="d-flex gap-2">
+    <a href="/attendance/add" class="btn btn-navy btn-sm"><i class="bi bi-plus-lg me-1"></i>Add Attendance</a>
+    <a href="/attendance/marks/add" class="btn btn-outline-secondary btn-sm"><i class="bi bi-pencil me-1"></i>Add Marks</a>
+  </div>
+</div>
+<div class="card">
+  <div class="card-body p-0">
+    <table class="table table-hover mb-0" style="font-size:.875rem;">
+      <thead style="background:#f4f6fb;">
+        <tr><th class="ps-4">Student</th><th>Course</th><th>Mobile</th><th>Action</th></tr>
+      </thead>
+      <tbody>
+        {% for s in students %}
+        <tr>
+          <td class="ps-4"><strong>{{ s.full_name }}</strong><br><small class="text-muted">{{ s.admission_number }}</small></td>
+          <td>{{ s.course_enrolled or '—' }}</td>
+          <td>{{ s.student_mobile or '—' }}</td>
+          <td><a href="/attendance/student/{{ s.id }}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-eye"></i> View Records</a></td>
+        </tr>
+        {% else %}
+        <tr><td colspan="4" class="text-center py-4 text-muted">No active students found. <a href="/students/register">Register one</a>.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

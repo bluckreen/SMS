@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% block title %}Register - Hostel & Transport{% endblock %}
+{% block page_title %}Register New Student{% endblock %}
+
+{% block content %}
+<div class="step-bar">
+  <div class="step-item done"><i class="bi bi-check-lg"></i> 1. Personal</div>
+  <div class="step-item done"><i class="bi bi-check-lg"></i> 2. Contact</div>
+  <div class="step-item done"><i class="bi bi-check-lg"></i> 3. Address</div>
+  <div class="step-item done"><i class="bi bi-check-lg"></i> 4. Family</div>
+  <div class="step-item done"><i class="bi bi-check-lg"></i> 5. Admission</div>
+  <div class="step-item done"><i class="bi bi-check-lg"></i> 6. Academic</div>
+  <div class="step-item done"><i class="bi bi-check-lg"></i> 7. Documents</div>
+  <div class="step-item done"><i class="bi bi-check-lg"></i> 8. Health</div>
+  <div class="step-item active"><i class="bi bi-building"></i> 9. Hostel & Transport</div>
+</div>
+
+<div class="card">
+  <div class="card-header"><i class="bi bi-building-fill me-2"></i>Hostel & Transport Details</div>
+  <div class="card-body p-4">
+    <form method="POST">
+
+      <!-- Hostel -->
+      <p class="text-muted mb-3" style="font-size:0.8rem;text-transform:uppercase;letter-spacing:1px;">Hostel</p>
+      <div class="row g-3 mb-4">
+        <div class="col-md-4">
+          <label class="form-label">Requires Hostel?</label>
+          <select name="requires_hostel" class="form-select" id="hostelSelect">
+            <option value="0" {% if not form_data.get('requires_hostel') %}selected{% endif %}>No</option>
+            <option value="1" {% if form_data.get('requires_hostel') %}selected{% endif %}>Yes</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="hostel-fields" style="display:{% if form_data.get('requires_hostel') %}block{% else %}none{% endif %}">
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <label class="form-label">Room Type</label>
+            <select name="room_type" class="form-select">
+              <option value="">-- Select --</option>
+              <option {% if form_data.get('room_type')=='Single' %}selected{% endif %}>Single</option>
+              <option {% if form_data.get('room_type')=='Double' %}selected{% endif %}>Double</option>
+              <option {% if form_data.get('room_type')=='Dormitory' %}selected{% endif %}>Dormitory</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Assigned Room No.</label>
+            <input type="text" name="assigned_room_no" class="form-control"
+                   value="{{ form_data.get('assigned_room_no','') }}">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Hostel Fee Status</label>
+            <select name="hostel_fee_status" class="form-select">
+              <option value="">-- Select --</option>
+              <option {% if form_data.get('hostel_fee_status')=='Paid' %}selected{% endif %}>Paid</option>
+              <option {% if form_data.get('hostel_fee_status')=='Unpaid' %}selected{% endif %}>Unpaid</option>
+              <option {% if form_data.get('hostel_fee_status')=='Partial' %}selected{% endif %}>Partial</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Student Hostel Status</label>
+            <select name="student_hostel_status" class="form-select">
+              <option {% if form_data.get('student_hostel_status')=='In hostel' %}selected{% endif %}>In hostel</option>
+              <option {% if form_data.get('student_hostel_status')=='Not in hostel' %}selected{% endif %}>Not in hostel</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Hostel Admission Date</label>
+            <input type="date" name="hostel_admission_date" class="form-control"
+                   value="{{ form_data.get('hostel_admission_date','') }}">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Residential Status</label>
+            <select name="residential_status" class="form-select">
+              <option {% if form_data.get('residential_status')=='Day Scholar' %}selected{% endif %}>Day Scholar</option>
+              <option {% if form_data.get('residential_status')=='Hosteller' %}selected{% endif %}>Hosteller</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- Transport -->
+      <p class="text-muted mb-3" style="font-size:0.8rem;text-transform:uppercase;letter-spacing:1px;">Transport</p>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label class="form-label">Requires College Transport?</label>
+          <select name="requires_transport" class="form-select" id="transportSelect">
+            <option value="0" {% if not form_data.get('requires_transport') %}selected{% endif %}>No</option>
+            <option value="1" {% if form_data.get('requires_transport') %}selected{% endif %}>Yes</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="transport-fields" style="display:{% if form_data.get('requires_transport') %}block{% else %}none{% endif %}; margin-top:1rem;">
+        <div class="row g-3">
+          <div class="col-md-4">
+            <label class="form-label">Transport No.</label>
+            <input type="text" name="transport_no" class="form-control"
+                   value="{{ form_data.get('transport_no','') }}">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Pickup Point</label>
+            <input type="text" name="pickup_point" class="form-control"
+                   value="{{ form_data.get('pickup_point','') }}">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Drop Point</label>
+            <input type="text" name="drop_point" class="form-control"
+                   value="{{ form_data.get('drop_point','') }}">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Transport Fee Status</label>
+            <select name="transport_fee_status" class="form-select">
+              <option value="">-- Select --</option>
+              <option {% if form_data.get('transport_fee_status')=='Paid' %}selected{% endif %}>Paid</option>
+              <option {% if form_data.get('transport_fee_status')=='Unpaid' %}selected{% endif %}>Unpaid</option>
+              <option {% if form_data.get('transport_fee_status')=='Partial' %}selected{% endif %}>Partial</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Transport Start Date</label>
+            <input type="date" name="transport_start_date" class="form-control"
+                   value="{{ form_data.get('transport_start_date','') }}">
+          </div>
+        </div>
+      </div>
+
+      <!-- Final submit -->
+      <div class="mt-4 p-3 rounded" style="background:#e8eef7;border:1px solid #d0dcea;">
+        <p class="mb-1" style="font-size:0.8rem;font-weight:600;color:#1a3c6e;">
+          <i class="bi bi-check2-circle me-1"></i>Final Step
+        </p>
+        <p class="mb-0 text-muted" style="font-size:0.8rem;">
+          Registering: <strong>{{ form_data.get('full_name','—') }}</strong> |
+          {{ form_data.get('course_enrolled','—') }} | {{ form_data.get('academic_year','—') }}
+        </p>
+      </div>
+
+      <div class="d-flex justify-content-between mt-4">
+        <a href="/students/register/health" class="btn btn-outline-secondary">
+          <i class="bi bi-arrow-left me-1"></i>Back
+        </a>
+        <button type="submit" class="btn btn-navy px-4">
+          Next <i class="bi bi-arrow-right ms-1"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.getElementById('hostelSelect').addEventListener('change', function() {
+    document.getElementById('hostel-fields').style.display = this.value == '1' ? 'block' : 'none';
+  });
+  document.getElementById('transportSelect').addEventListener('change', function() {
+    document.getElementById('transport-fields').style.display = this.value == '1' ? 'block' : 'none';
+  });
+</script>
+{% endblock %}

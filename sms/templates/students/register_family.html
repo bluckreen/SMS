@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}Register - Family Details{% endblock %}
+{% block page_title %}Register New Student{% endblock %}
+
+{% block content %}
+<div class="step-bar">
+  <div class="step-item done"><i class="bi bi-check-lg"></i> 1. Personal</div>
+  <div class="step-item done"><i class="bi bi-check-lg"></i> 2. Contact</div>
+  <div class="step-item done"><i class="bi bi-check-lg"></i> 3. Permanent Address</div>
+  <div class="step-item active"><i class="bi bi-people"></i> 4. Family</div>
+  <div class="step-item"><i class="bi bi-mortarboard"></i> 5. Admission</div>
+</div>
+
+<div class="card">
+  <div class="card-header"><i class="bi bi-people-fill me-2"></i>Family Details</div>
+  <div class="card-body p-4">
+    <form method="POST">
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Father's Name</label>
+          <input type="text" name="father_name" class="form-control" value="{{ form_data.get('father_name','') }}">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Mother's Name</label>
+          <input type="text" name="mother_name" class="form-control" value="{{ form_data.get('mother_name','') }}">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Father's Occupation</label>
+          <input type="text" name="father_occupation" class="form-control" value="{{ form_data.get('father_occupation','') }}">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Mother's Occupation</label>
+          <input type="text" name="mother_occupation" class="form-control" value="{{ form_data.get('mother_occupation','') }}">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Father's Qualification</label>
+          <input type="text" name="father_qualification" class="form-control" value="{{ form_data.get('father_qualification','') }}">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Mother's Qualification</label>
+          <input type="text" name="mother_qualification" class="form-control" value="{{ form_data.get('mother_qualification','') }}">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Annual Family Income (₹)</label>
+          <input type="number" name="annual_family_income" class="form-control" value="{{ form_data.get('annual_family_income','') }}">
+        </div>
+      </div>
+
+      <hr>
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" name="guardian_different" id="guardianCheck"
+               {% if form_data.get('guardian_different') %}checked{% endif %}>
+        <label class="form-check-label" for="guardianCheck">Guardian is different from parents</label>
+      </div>
+
+      <div id="guardian-fields" style="display:{% if form_data.get('guardian_different') %}block{% else %}none{% endif %}">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Guardian Name</label>
+            <input type="text" name="guardian_name" class="form-control" value="{{ form_data.get('guardian_name','') }}">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Guardian Occupation</label>
+            <input type="text" name="guardian_occupation" class="form-control" value="{{ form_data.get('guardian_occupation','') }}">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Guardian Mobile</label>
+            <input type="tel" name="guardian_mobile" class="form-control" value="{{ form_data.get('guardian_mobile','') }}">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Guardian Email</label>
+            <input type="email" name="guardian_email" class="form-control" value="{{ form_data.get('guardian_email','') }}">
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between mt-4">
+        <a href="/students/register/permanent" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i>Back</a>
+        <button type="submit" class="btn btn-navy px-4">Next <i class="bi bi-arrow-right ms-1"></i></button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.getElementById('guardianCheck').addEventListener('change', function() {
+    document.getElementById('guardian-fields').style.display = this.checked ? 'block' : 'none';
+  });
+</script>
+{% endblock %}

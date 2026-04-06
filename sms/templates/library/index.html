@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Library{% endblock %}
+{% block page_title %}Library Book Issue Records{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between mb-3">
+  <span class="text-muted" style="font-size:.875rem;">{{ records|length }} record(s)</span>
+  <a href="/library/add" class="btn btn-navy btn-sm"><i class="bi bi-plus-lg me-1"></i>Issue Book</a>
+</div>
+<div class="card">
+  <div class="card-body p-0">
+    <table class="table table-hover mb-0" style="font-size:.875rem;">
+      <thead style="background:#f4f6fb;">
+        <tr><th class="ps-4">Student</th><th>Book ID</th><th>Issue Date</th><th>Due Date</th><th>Return Date</th><th>Fine</th><th>Status</th><th>Action</th></tr>
+      </thead>
+      <tbody>
+        {% for r in records %}
+        <tr>
+          <td class="ps-4">{{ r.student.full_name }}</td>
+          <td>{{ r.book_id }}</td>
+          <td>{{ r.issue_date }}</td>
+          <td>{{ r.due_date }}</td>
+          <td>{{ r.return_date or '—' }}</td>
+          <td>{% if r.computed_fine > 0 %}<span class="text-danger">₹{{ r.computed_fine }}</span>{% else %}—{% endif %}</td>
+          <td>
+            <span class="badge bg-{{ 'success' if r.status=='Returned' else 'danger' if r.is_overdue else 'primary' }}">
+              {{ 'Overdue' if r.is_overdue and r.status!='Returned' else r.status }}
+            </span>
+          </td>
+          <td>
+            {% if r.status != 'Returned' %}
+            <form method="POST" action="/library/return/{{ r.id }}" style="display:inline;">
+              <button class="btn btn-outline-success btn-sm">Return</button>
+            </form>
+            {% endif %}
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="8" class="text-center py-4 text-muted">No records yet. <a href="/library/add">Issue a book</a>.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

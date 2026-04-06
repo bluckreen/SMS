@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}SMS{% endblock %} - Student Management System</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    :root { --navy: #1a3c6e; --navy-light: #e8eef7; }
+    body { background: #f4f6fb; font-family: 'Segoe UI', sans-serif; }
+
+    /* Sidebar */
+    .sidebar {
+      width: 240px; min-height: 100vh; background: var(--navy);
+      position: fixed; top: 0; left: 0; z-index: 100; padding-top: 1rem;
+    }
+    .sidebar-brand {
+      color: #fff; font-size: 1.2rem; font-weight: 600;
+      padding: 1rem 1.25rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .sidebar-brand span { font-size: 0.75rem; display: block; opacity: 0.6; font-weight: 400; }
+    .nav-link {
+      color: rgba(255,255,255,0.75); padding: 0.6rem 1.25rem;
+      border-radius: 6px; margin: 2px 8px; font-size: 0.875rem;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav-link:hover, .nav-link.active {
+      background: rgba(255,255,255,0.12); color: #fff;
+    }
+    .nav-section {
+      font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px;
+      color: rgba(255,255,255,0.35); padding: 1rem 1.25rem 0.25rem;
+    }
+
+    /* Main content */
+    .main-content { margin-left: 240px; padding: 1.5rem; }
+    .topbar {
+      background: #fff; border-bottom: 1px solid #e0e6f0;
+      padding: 0.75rem 1.5rem; margin: -1.5rem -1.5rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .topbar-title { font-size: 1rem; font-weight: 600; color: var(--navy); }
+
+    /* Cards */
+    .card { border: 1px solid #e0e6f0; border-radius: 10px; }
+    .card-header {
+      background: var(--navy-light); border-bottom: 1px solid #d0dcea;
+      font-weight: 600; color: var(--navy); font-size: 0.9rem;
+      padding: 0.75rem 1.25rem;
+    }
+
+    /* Form */
+    .form-label { font-size: 0.82rem; color: #555; font-weight: 500; margin-bottom: 3px; }
+    .form-control, .form-select {
+      font-size: 0.875rem; border-color: #d0dcea; border-radius: 6px;
+    }
+    .form-control:focus, .form-select:focus {
+      border-color: var(--navy); box-shadow: 0 0 0 2px rgba(26,60,110,0.1);
+    }
+
+    /* Step bar */
+    .step-bar {
+      display: flex; gap: 4px; overflow-x: auto;
+      padding-bottom: 0.5rem; margin-bottom: 1.5rem;
+    }
+    .step-item {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 0.75rem; white-space: nowrap;
+      padding: 5px 12px; border-radius: 20px;
+      background: #e0e6f0; color: #777;
+    }
+    .step-item.active { background: var(--navy); color: #fff; }
+    .step-item.done { background: #28a745; color: #fff; }
+
+    /* Alert */
+    .alert { border-radius: 8px; font-size: 0.875rem; }
+
+    /* Buttons */
+    .btn-navy { background: var(--navy); color: #fff; border: none; }
+    .btn-navy:hover { background: #15305a; color: #fff; }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <i class="bi bi-mortarboard-fill me-2"></i>SMS
+    <span>Student Management System</span>
+  </div>
+  <div class="nav-section">Main</div>
+  <a href="/" class="nav-link {% if request.endpoint == 'index' %}active{% endif %}">
+    <i class="bi bi-speedometer2"></i> Dashboard
+  </a>
+  <div class="nav-section">Students</div>
+  <a href="/students/" class="nav-link {% if 'students' in request.endpoint %}active{% endif %}">
+    <i class="bi bi-people"></i> All Students
+  </a>
+  <a href="/students/register" class="nav-link">
+    <i class="bi bi-person-plus"></i> Register Student
+  </a>
+  <div class="nav-section">Records</div>
+  <a href="/attendance/" class="nav-link">
+    <i class="bi bi-calendar-check"></i> Attendance
+  </a>
+  <a href="/library/" class="nav-link">
+    <i class="bi bi-book"></i> Library
+  </a>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+  <div class="topbar">
+    <div class="topbar-title">{% block page_title %}Dashboard{% endblock %}</div>
+    <div style="font-size:0.8rem; color:#888;">
+      <i class="bi bi-person-circle me-1"></i> Admin
+    </div>
+  </div>
+
+  <!-- Flash messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }} alert-dismissible fade show">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

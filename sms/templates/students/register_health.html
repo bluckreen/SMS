@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}Register - Health Info{% endblock %}
+{% block page_title %}Register New Student{% endblock %}
+
+{% block content %}
+<div class="step-bar">
+  <div class="step-item done"><i class="bi bi-check-lg"></i> 1. Personal</div>
+  <div class="step-item done"><i class="bi bi-check-lg"></i> 2. Contact</div>
+  <div class="step-item done"><i class="bi bi-check-lg"></i> 3. Address</div>
+  <div class="step-item done"><i class="bi bi-check-lg"></i> 4. Family</div>
+  <div class="step-item done"><i class="bi bi-check-lg"></i> 5. Admission</div>
+  <div class="step-item done"><i class="bi bi-check-lg"></i> 6. Academic</div>
+  <div class="step-item done"><i class="bi bi-check-lg"></i> 7. Documents</div>
+  <div class="step-item active"><i class="bi bi-heart-pulse"></i> 8. Health</div>
+  <div class="step-item"><i class="bi bi-building"></i> 9. Hostel</div>
+</div>
+
+<div class="card">
+  <div class="card-header"><i class="bi bi-heart-pulse-fill me-2"></i>Health & Special Information</div>
+  <div class="card-body p-4">
+    <form method="POST">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Medical Conditions</label>
+          <input type="text" name="medical_conditions" class="form-control"
+                 placeholder="e.g. Diabetes, Asthma (or None)"
+                 value="{{ form_data.get('medical_conditions','') }}">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Allergies</label>
+          <input type="text" name="allergies" class="form-control"
+                 placeholder="e.g. Peanuts, Penicillin (or None)"
+                 value="{{ form_data.get('allergies','') }}">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Disability</label>
+          <select name="disability" class="form-select" id="disabilitySelect">
+            <option value="None" {% if form_data.get('disability','None')=='None' %}selected{% endif %}>None</option>
+            <option {% if form_data.get('disability')=='Physical' %}selected{% endif %}>Physical</option>
+            <option {% if form_data.get('disability')=='Visual' %}selected{% endif %}>Visual</option>
+            <option {% if form_data.get('disability')=='Hearing' %}selected{% endif %}>Hearing</option>
+            <option {% if form_data.get('disability')=='Learning' %}selected{% endif %}>Learning</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Medical Insurance</label>
+          <select name="medical_insurance" class="form-select" id="insuranceSelect">
+            <option value="0" {% if not form_data.get('medical_insurance') %}selected{% endif %}>No</option>
+            <option value="1" {% if form_data.get('medical_insurance') %}selected{% endif %}>Yes</option>
+          </select>
+        </div>
+
+        <div class="col-md-6" id="insurance-id-field"
+             style="display:{% if form_data.get('medical_insurance') %}block{% else %}none{% endif %}">
+          <label class="form-label">Insurance ID</label>
+          <input type="text" name="insurance_id" class="form-control"
+                 value="{{ form_data.get('insurance_id','') }}">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Special Support Required</label>
+          <input type="text" name="special_support" class="form-control"
+                 placeholder="e.g. Wheelchair access, Sign language"
+                 value="{{ form_data.get('special_support','') }}">
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Counselling Records</label>
+          <textarea name="counselling_records" class="form-control" rows="2"
+                    placeholder="Any previous counselling history...">{{ form_data.get('counselling_records','') }}</textarea>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between mt-4">
+        <a href="/students/register/documents" class="btn btn-outline-secondary">
+          <i class="bi bi-arrow-left me-1"></i>Back
+        </a>
+        <button type="submit" class="btn btn-navy px-4">
+          Next <i class="bi bi-arrow-right ms-1"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.getElementById('insuranceSelect').addEventListener('change', function() {
+    document.getElementById('insurance-id-field').style.display = this.value == '1' ? 'block' : 'none';
+  });
+</script>
+{% endblock %}

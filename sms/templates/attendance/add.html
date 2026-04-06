@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Add Attendance{% endblock %}
+{% block page_title %}Add Attendance Record{% endblock %}
+{% block content %}
+<div class="card" style="max-width:600px;">
+  <div class="card-header"><i class="bi bi-calendar-check-fill me-2"></i>Add Attendance</div>
+  <div class="card-body p-4">
+    <form method="POST">
+      <div class="mb-3">
+        <label class="form-label">Student <span class="text-danger">*</span></label>
+        <select name="student_id" class="form-select" required>
+          <option value="">-- Select Student --</option>
+          {% for s in students %}<option value="{{ s.id }}">{{ s.full_name }} ({{ s.admission_number }})</option>{% endfor %}
+        </select>
+      </div>
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Semester <span class="text-danger">*</span></label>
+          <select name="semester" class="form-select" required>
+            <option value="">-- Select --</option>
+            {% for i in range(1,9) %}<option>{{ i }}</option>{% endfor %}
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Course / Subject <span class="text-danger">*</span></label>
+          <input type="text" name="course" class="form-control" placeholder="e.g. Data Structures" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Total Classes Held</label>
+          <input type="number" name="total_classes" class="form-control" min="0" value="0" id="total">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Classes Attended</label>
+          <input type="number" name="classes_attended" class="form-control" min="0" value="0" id="attended">
+        </div>
+      </div>
+      <div class="p-2 rounded mb-3" style="background:#f4f6fb;font-size:.85rem;">
+        Attendance: <strong id="pct">0%</strong> — Status: <strong id="status">—</strong>
+      </div>
+      <div class="d-flex justify-content-between">
+        <a href="/attendance/" class="btn btn-outline-secondary">Cancel</a>
+        <button type="submit" class="btn btn-navy">Save Record</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+  function calc() {
+    const t = parseInt(document.getElementById('total').value)||0;
+    const a = parseInt(document.getElementById('attended').value)||0;
+    const p = t>0 ? Math.round(a/t*100) : 0;
+    document.getElementById('pct').textContent = p+'%';
+    document.getElementById('status').textContent = p>=90?'Excellent':p>=75?'Satisfactory':'Shortage';
+  }
+  document.getElementById('total').addEventListener('input', calc);
+  document.getElementById('attended').addEventListener('input', calc);
+</script>
+{% endblock %}

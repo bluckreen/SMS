@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}All Students{% endblock %}
+{% block page_title %}All Students{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <span class="text-muted" style="font-size:0.875rem;">{{ students|length }} student(s) registered</span>
+  <a href="/students/register" class="btn btn-navy btn-sm">
+    <i class="bi bi-person-plus me-1"></i> Register New Student
+  </a>
+</div>
+
+<div class="card">
+  <div class="card-body p-0">
+    <table class="table table-hover mb-0" style="font-size:0.875rem;">
+      <thead style="background:#f4f6fb;">
+        <tr>
+          <th class="ps-4">Photo</th>
+          <th>Admission No.</th>
+          <th>Full Name</th>
+          <th>Course</th>
+          <th>Mobile</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in students %}
+        <tr>
+          <td class="ps-4">
+            {% if s.photo_path %}
+              <img src="/static/{{ s.photo_path }}" width="36" height="36"
+                   style="border-radius:50%;object-fit:cover;">
+            {% else %}
+              <div style="width:36px;height:36px;border-radius:50%;
+                          background:#e8eef7;display:flex;align-items:center;
+                          justify-content:center;color:#1a3c6e;font-weight:600;font-size:0.8rem;">
+                {{ s.full_name[0] }}
+              </div>
+            {% endif %}
+          </td>
+          <td>{{ s.admission_number or '—' }}</td>
+          <td><strong>{{ s.full_name }}</strong></td>
+          <td>{{ s.course_enrolled or '—' }}</td>
+          <td>{{ s.student_mobile or '—' }}</td>
+          <td>
+            {% set status_colors = {0:'success', 1:'danger', 2:'secondary', 3:'warning'} %}
+            <span class="badge bg-{{ status_colors.get(s.admission_status, 'secondary') }}">
+              {{ s.admission_status_label }}
+            </span>
+          </td>
+          <td>
+            <a href="/students/{{ s.id }}" class="btn btn-outline-secondary btn-sm">
+              <i class="bi bi-eye"></i> View
+            </a>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="7" class="text-center py-5 text-muted">
+            <i class="bi bi-people" style="font-size:2rem;"></i>
+            <p class="mt-2 mb-0">No students registered yet.</p>
+            <a href="/students/register" class="btn btn-navy btn-sm mt-2">Register First Student</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

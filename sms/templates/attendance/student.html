@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}{{ student.full_name }} - Records{% endblock %}
+{% block page_title %}Academic Records{% endblock %}
+{% block content %}
+<div class="mb-3 d-flex align-items-center gap-3">
+  <div>
+    <h5 class="mb-0">{{ student.full_name }}</h5>
+    <small class="text-muted">{{ student.admission_number }} | {{ student.course_enrolled }}</small>
+  </div>
+</div>
+<div class="row g-3">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header"><i class="bi bi-calendar-check me-2"></i>Attendance Records</div>
+      <div class="card-body p-0">
+        <table class="table table-sm mb-0" style="font-size:.85rem;">
+          <thead style="background:#f4f6fb;"><tr><th class="ps-3">Course</th><th>Sem</th><th>Attended</th><th>%</th><th>Status</th></tr></thead>
+          <tbody>
+            {% for r in records %}
+            <tr>
+              <td class="ps-3">{{ r.course }}</td><td>{{ r.semester }}</td>
+              <td>{{ r.classes_attended }}/{{ r.total_classes }}</td>
+              <td>{{ r.percentage }}%</td>
+              <td><span class="badge bg-{{ 'success' if r.status=='Excellent' else 'warning' if r.status=='Satisfactory' else 'danger' }}">{{ r.status }}</span></td>
+            </tr>
+            {% else %}<tr><td colspan="5" class="text-center text-muted py-3">No records yet.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header"><i class="bi bi-pencil me-2"></i>Marks Records</div>
+      <div class="card-body p-0">
+        <table class="table table-sm mb-0" style="font-size:.85rem;">
+          <thead style="background:#f4f6fb;"><tr><th class="ps-3">Course</th><th>Sem</th><th>Marks</th><th>Grade</th><th>SGPA</th></tr></thead>
+          <tbody>
+            {% for m in marks %}
+            <tr>
+              <td class="ps-3">{{ m.course }}</td><td>{{ m.semester }}</td>
+              <td>{{ m.marks_obtained }}/{{ m.maximum_marks }}</td>
+              <td><span class="badge bg-{{ 'success' if m.status=='Pass' else 'danger' }}">{{ m.grade }}</span></td>
+              <td>{{ m.sgpa or '—' }}</td>
+            </tr>
+            {% else %}<tr><td colspan="5" class="text-center text-muted py-3">No marks yet.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mt-3"><a href="/attendance/" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left me-1"></i>Back</a></div>
+{% endblock %}

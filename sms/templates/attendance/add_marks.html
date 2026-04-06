@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Add Marks{% endblock %}
+{% block page_title %}Add Marks Record{% endblock %}
+{% block content %}
+<div class="card" style="max-width:600px;">
+  <div class="card-header"><i class="bi bi-pencil-fill me-2"></i>Add Marks</div>
+  <div class="card-body p-4">
+    <form method="POST">
+      <div class="mb-3">
+        <label class="form-label">Student <span class="text-danger">*</span></label>
+        <select name="student_id" class="form-select" required>
+          <option value="">-- Select Student --</option>
+          {% for s in students %}<option value="{{ s.id }}">{{ s.full_name }} ({{ s.admission_number }})</option>{% endfor %}
+        </select>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Semester</label>
+          <select name="semester" class="form-select">
+            {% for i in range(1,9) %}<option>{{ i }}</option>{% endfor %}
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Course / Subject</label>
+          <input type="text" name="course" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Marks Obtained</label>
+          <input type="number" name="marks_obtained" class="form-control" step="0.5" value="0">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Maximum Marks</label>
+          <input type="number" name="maximum_marks" class="form-control" value="100">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Grade</label>
+          <select name="grade" class="form-select">
+            {% for g in ['O','A+','A','B+','B','C','D','F'] %}<option>{{ g }}</option>{% endfor %}
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Status</label>
+          <select name="status" class="form-select">
+            <option>Pass</option><option>Fail</option><option>Absent</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">SGPA</label>
+          <input type="number" name="sgpa" class="form-control" step="0.01" placeholder="e.g. 8.5">
+        </div>
+      </div>
+      <div class="d-flex justify-content-between mt-4">
+        <a href="/attendance/" class="btn btn-outline-secondary">Cancel</a>
+        <button type="submit" class="btn btn-navy">Save Marks</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="row g-3 mb-4">
+  <div class="col-md-3">
+    <div class="card p-3 text-center">
+      <div style="font-size:2rem;color:#1a3c6e;"><i class="bi bi-people-fill"></i></div>
+      <div style="font-size:1.75rem;font-weight:700;color:#1a3c6e;">{{ total }}</div>
+      <div class="text-muted" style="font-size:0.8rem;">Total Students</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card p-3 text-center">
+      <div style="font-size:2rem;color:#28a745;"><i class="bi bi-person-check-fill"></i></div>
+      <div style="font-size:1.75rem;font-weight:700;color:#28a745;">{{ active }}</div>
+      <div class="text-muted" style="font-size:0.8rem;">Active Students</div>
+    </div>
+  </div>
+</div>
+
+<div class="card p-4 text-center" style="max-width:400px;">
+  <i class="bi bi-mortarboard-fill" style="font-size:3rem;color:#1a3c6e;"></i>
+  <h5 class="mt-3">Welcome to SMS</h5>
+  <p class="text-muted" style="font-size:0.875rem;">Student Management System is ready.</p>
+  <a href="/students/register" class="btn btn-navy">
+    <i class="bi bi-person-plus me-2"></i>Register New Student
+  </a>
+</div>
+{% endblock %}

@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% block title %}Register Student{% endblock %}
+{% block page_title %}Register New Student{% endblock %}
+
+{% block content %}
+
+<!-- Step bar -->
+<div class="step-bar">
+  <div class="step-item active"><i class="bi bi-person"></i> 1. Personal</div>
+  <div class="step-item"><i class="bi bi-telephone"></i> 2. Contact</div>
+  <div class="step-item"><i class="bi bi-house"></i> 3. Permanent Address</div>
+  <div class="step-item"><i class="bi bi-people"></i> 4. Family</div>
+  <div class="step-item"><i class="bi bi-mortarboard"></i> 5. Admission</div>
+  <div class="step-item"><i class="bi bi-book"></i> 6. Academic</div>
+  <div class="step-item"><i class="bi bi-file-earmark"></i> 7. Documents</div>
+  <div class="step-item"><i class="bi bi-heart-pulse"></i> 8. Health</div>
+  <div class="step-item"><i class="bi bi-building"></i> 9. Hostel & Transport</div>
+  <div class="step-item"><i class="bi bi-star"></i> 10. Interests</div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <i class="bi bi-person-fill me-2"></i>Personal Information
+  </div>
+  <div class="card-body p-4">
+    <form method="POST" action="/students/register/personal" enctype="multipart/form-data">
+
+      <!-- Photo + top fields -->
+      <div class="row">
+        <div class="col-md-9">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Aadhaar ID <span class="text-danger">*</span></label>
+              <input type="text" name="aadhaar_id" class="form-control"
+                     placeholder="XXXX XXXX XXXX" maxlength="14" required
+                     value="{{ form_data.get('aadhaar_id', '') }}">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Full Name <span class="text-danger">*</span></label>
+              <input type="text" name="full_name" class="form-control"
+                     placeholder="As per Aadhaar card" required
+                     value="{{ form_data.get('full_name', '') }}">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Date of Birth <span class="text-danger">*</span></label>
+              <input type="date" name="date_of_birth" class="form-control" required
+                     value="{{ form_data.get('date_of_birth', '') }}">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Gender <span class="text-danger">*</span></label>
+              <select name="gender" class="form-select" required>
+                <option value="">-- Select --</option>
+                <option {% if form_data.get('gender')=='Male' %}selected{% endif %}>Male</option>
+                <option {% if form_data.get('gender')=='Female' %}selected{% endif %}>Female</option>
+                <option {% if form_data.get('gender')=='Other' %}selected{% endif %}>Other</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Photo upload -->
+        <div class="col-md-3 text-center">
+          <label class="form-label d-block">Photo <span class="text-danger">*</span></label>
+          <div id="photo-preview" style="
+            width:120px; height:140px; border:2px dashed #d0dcea;
+            border-radius:8px; margin:0 auto 8px; display:flex;
+            align-items:center; justify-content:center; overflow:hidden;
+            background:#f8fafc; cursor:pointer;">
+            <i class="bi bi-person-bounding-box" style="font-size:2.5rem;color:#ccc;"></i>
+          </div>
+          <input type="file" name="photo" id="photo-input" accept="image/*"
+                 class="form-control form-control-sm" style="font-size:0.78rem;">
+        </div>
+      </div>
+
+      <hr class="my-4">
+
+      <!-- Row 2 -->
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label class="form-label">Nationality</label>
+          <select name="nationality" class="form-select">
+            <option value="">-- Select --</option>
+            <option {% if form_data.get('nationality')=='Indian' %}selected{% endif %}>Indian</option>
+            <option {% if form_data.get('nationality')=='Other' %}selected{% endif %}>Other</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Blood Group</label>
+          <select name="blood_group" class="form-select">
+            <option value="">-- Select --</option>
+            {% for bg in ['A+','A-','B+','B-','O+','O-','AB+','AB-'] %}
+              <option {% if form_data.get('blood_group')==bg %}selected{% endif %}>{{ bg }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Native Language</label>
+          <select name="native_language" class="form-select">
+            <option value="">-- Select --</option>
+            {% for lang in ['Malayalam','Tamil','Hindi','Kannada','Telugu','English','Other'] %}
+              <option {% if form_data.get('native_language')==lang %}selected{% endif %}>{{ lang }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Religion</label>
+          <select name="religion" class="form-select">
+            <option value="">-- Select --</option>
+            {% for r in ['Hindu','Muslim','Christian','Sikh','Buddhist','Jain','Other'] %}
+              <option {% if form_data.get('religion')==r %}selected{% endif %}>{{ r }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Caste</label>
+          <select name="caste" class="form-select">
+            <option value="">-- Select --</option>
+            {% for c in ['General','OBC','SC','ST','EWS','Other'] %}
+              <option {% if form_data.get('caste')==c %}selected{% endif %}>{{ c }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="d-flex justify-content-between mt-4">
+        <a href="/students/" class="btn btn-outline-secondary">
+          <i class="bi bi-x-lg me-1"></i>Cancel
+        </a>
+        <button type="submit" class="btn btn-navy px-4">
+          Next <i class="bi bi-arrow-right ms-1"></i>
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // Photo preview
+  document.getElementById('photo-input').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      const preview = document.getElementById('photo-preview');
+      preview.innerHTML = `<img src="${ev.target.result}"
+        style="width:100%;height:100%;object-fit:cover;">`;
+    };
+    reader.readAsDataURL(file);
+  });
+</script>
+{% endblock %}
