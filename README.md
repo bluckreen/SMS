@@ -1,7 +1,7 @@
 🎓 STUDENT MANAGEMENT SYSTEM
-👤 Developer
 
-Saliha Jibin – EMEA College of Arts and Science
+
+👤 Developer : Saliha Jibin – EMEA College of Arts and Science
 
 🔗 Project Link
 
