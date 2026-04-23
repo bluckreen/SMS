@@ -62,12 +62,15 @@ Project Documentation
 For Software:
 
 <img width="1898" height="782" alt="Screenshot 2026-04-23 205339" src="https://github.com/user-attachments/assets/717e31d9-e7d0-4115-b1d0-676494ea5317" />
+Dashboard page
 
 
 <img width="1910" height="901" alt="Screenshot 2026-04-23 205427" src="https://github.com/user-attachments/assets/e51bd0b5-52d0-473d-a3f8-1c1ae1e9d6da" />
+Address page
 
 
 <img width="1873" height="899" alt="Screenshot 2026-04-23 205604" src="https://github.com/user-attachments/assets/0f8c2ca0-f599-47e1-886d-936e13b47a25" />
+Contact page
 
 
 
